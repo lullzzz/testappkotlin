@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="black_overlay">#66000000</color>
+
+
+    <!-- Gauge view -->
+    <color name="background1_gradient_start_color">#555555</color>
+    <color name="background1_gradient_center_color">#FFFFFF</color>
+    <color name="background1_gradient_end_color">#333333</color>
+
+    <color name="background2_gradient_start_color">#000000</color>
+    <color name="background2_gradient_center_color">#111111</color>
+    <color name="background2_gradient_center1_color">#222222</color>
+    <color name="background2_gradient_end_color">#555555</color>
+
+    <color name="default_arrow_color">#C80000</color>
+    <color name="default_tick_color">#FFFFFF</color>
+    <color name="default_text_color">#FFFFFF</color>
+
+
+</resources>

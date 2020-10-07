@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">TestApp</string>
+    <string name="speed_unit">km/h</string>
+    <string name="tachometer_unit">r/min</string>
+
+    <!-- Service -->
+    <string name="notification_channel_name">Test foreground service</string>
+    <string name="notification_channel_description">Notification to manage service state</string>
+    <string name="notification_content_title">Data generation service</string>
+    <string name="notification_content_text">Manage service state</string>
+    <string name="notification_action_stop">Stop service</string>
+    <string name="notification_action_pause">Pause sending data</string>
+    <string name="notification_action_resume">Resume sending data</string>
+</resources>
