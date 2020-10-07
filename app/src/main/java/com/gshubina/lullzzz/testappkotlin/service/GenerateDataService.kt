@@ -10,6 +10,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 import com.gshubina.lullzzz.testappkotlin.R
+import com.gshubina.lullzzz.testappkotlin.service.simulator.SpeedSimulator
+import java.util.function.Consumer
+import java.util.function.Predicate
 
 class GenerateDataService : Service() {
 
@@ -179,7 +182,10 @@ class GenerateDataService : Service() {
 
         override fun requestSpeedData() {
             val handler = Handler(mSpeedThread.looper)
-            handler.post { TODO("Not yet implemented") }
+            handler.post {
+                SpeedSimulator(Predicate { data -> mIsSimulationStarted }).speedStream()
+                    .forEach(Consumer { data -> sendSpeedData(data) })
+            }
         }
 
         override fun requestTachometerData() {
