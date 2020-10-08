@@ -12,8 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.gshubina.lullzzz.testappkotlin.R
 import com.gshubina.lullzzz.testappkotlin.service.simulator.SpeedSimulator
 import com.gshubina.lullzzz.testappkotlin.service.simulator.TachometerSimulator
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.function.Consumer
 import java.util.function.Predicate
 
@@ -30,8 +29,8 @@ class GenerateDataService : Service() {
     private lateinit var mNotificationManager: NotificationManagerCompat
     private lateinit var mForegroundNotificationBuilder: NotificationCompat.Builder
 
-    private val mSpeedThread = HandlerThread("SpeedDataHandler")
-    private val mTachometerThread = HandlerThread("TachometerDataHandler")
+    private val mTachometerDataCoroutineScope = CoroutineScope(newSingleThreadContext("tachometerDataThread"))
+    private val mSpeedDataCoroutineScope = CoroutineScope(newSingleThreadContext("speedometerDataThread"))
 
     private val mCallbackList: RemoteCallbackList<IDataServiceCallback> =
         object : RemoteCallbackList<IDataServiceCallback>() {
@@ -48,8 +47,6 @@ class GenerateDataService : Service() {
         super.onCreate()
         if (!mIsStarted) {
             mIsStarted = true
-            mSpeedThread.start()
-            mTachometerThread.start()
             startForegroundService(Intent(this, GenerateDataService::class.java))
         }
     }
@@ -87,8 +84,8 @@ class GenerateDataService : Service() {
     }
 
     override fun onDestroy() {
-        mSpeedThread.quitSafely()
-        mTachometerThread.quitSafely()
+        mSpeedDataCoroutineScope.cancel()
+        mTachometerDataCoroutineScope.cancel()
         super.onDestroy()
     }
 
@@ -184,16 +181,17 @@ class GenerateDataService : Service() {
         }
 
         override fun requestSpeedData() {
-            val handler = Handler(mSpeedThread.looper)
-            handler.post {
-                SpeedSimulator(Predicate { _ -> mIsSimulationStarted }).speedStream()
+            mSpeedDataCoroutineScope.launch {
+                SpeedSimulator(Predicate { _ -> mIsSimulationStarted && isActive }).speedStream()
                     .forEach(Consumer { data -> sendSpeedData(data) })
             }
         }
 
         override fun requestTachometerData() {
-            GlobalScope.launch {
-                TachometerSimulator(Predicate { _ -> mIsSimulationStarted }).tachometerStream()
+            mTachometerDataCoroutineScope.launch {
+                TachometerSimulator(Predicate { _ ->
+                    mIsSimulationStarted && isActive
+                }).tachometerStream()
                     .forEach(Consumer { data -> sendTachometerData(data) })
             }
         }
