@@ -12,6 +12,8 @@ import androidx.core.app.NotificationManagerCompat
 import com.gshubina.lullzzz.testappkotlin.R
 import com.gshubina.lullzzz.testappkotlin.service.simulator.SpeedSimulator
 import com.gshubina.lullzzz.testappkotlin.service.simulator.TachometerSimulator
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.function.Consumer
 import java.util.function.Predicate
 
@@ -190,8 +192,7 @@ class GenerateDataService : Service() {
         }
 
         override fun requestTachometerData() {
-            val handler = Handler(mTachometerThread.looper)
-            handler.post {
+            GlobalScope.launch {
                 TachometerSimulator(Predicate { _ -> mIsSimulationStarted }).tachometerStream()
                     .forEach(Consumer { data -> sendTachometerData(data) })
             }
