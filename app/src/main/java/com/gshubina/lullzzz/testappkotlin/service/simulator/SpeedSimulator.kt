@@ -11,9 +11,9 @@ class SpeedSimulator(filterFunction: Predicate<Double>) {
     private val LOG_TAG: String = SpeedSimulator::class.simpleName.toString()
     private val DATA_GENERATION_PERIOD_MS: Int = 300
 
-    var mFilterFunction: Predicate<Double> = filterFunction
+    private var mFilterFunction: Predicate<Double> = filterFunction
 
-    private val supplier: Supplier<Long> = Supplier<Long> {
+    private val supplier: Supplier<Long> = Supplier {
         try {
             Thread.sleep(DATA_GENERATION_PERIOD_MS.toLong())
         } catch (e: InterruptedException) {

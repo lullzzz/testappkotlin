@@ -184,7 +184,7 @@ class GenerateDataService : Service() {
         override fun requestSpeedData() {
             val handler = Handler(mSpeedThread.looper)
             handler.post {
-                SpeedSimulator(Predicate { data -> mIsSimulationStarted }).speedStream()
+                SpeedSimulator(Predicate { _ -> mIsSimulationStarted }).speedStream()
                     .forEach(Consumer { data -> sendSpeedData(data) })
             }
         }
@@ -192,7 +192,7 @@ class GenerateDataService : Service() {
         override fun requestTachometerData() {
             val handler = Handler(mTachometerThread.looper)
             handler.post {
-                TachometerSimulator(Predicate { data -> mIsSimulationStarted }).tachometerStream()
+                TachometerSimulator(Predicate { _ -> mIsSimulationStarted }).tachometerStream()
                     .forEach(Consumer { data -> sendTachometerData(data) })
             }
         }
@@ -207,7 +207,7 @@ class GenerateDataService : Service() {
             }
         } catch (e: RemoteException) {
             // RemoteCallbackList should processed the case, just log it
-            Log.w(LOG_TAG, e.message)
+            Log.w(LOG_TAG, e.message.toString())
         } finally {
             mCallbackList.finishBroadcast()
         }
@@ -223,7 +223,7 @@ class GenerateDataService : Service() {
             }
         } catch (e: RemoteException) {
             // RemoteCallbackList should processed the case, just log it
-            Log.w(LOG_TAG, e.message)
+            Log.w(LOG_TAG, e.message.toString())
         } finally {
             mCallbackList.finishBroadcast()
         }

@@ -11,9 +11,9 @@ class TachometerSimulator(filterFunction : Predicate<Double>) {
     private val LOG_TAG = TachometerSimulator::class.simpleName
     private val DATA_GENERATION_PERIOD_MS = 300
 
-    var mFilterFunction : Predicate<Double> = filterFunction
+    private var mFilterFunction : Predicate<Double> = filterFunction
 
-    private val supplier: Supplier<Long> = Supplier<Long> {
+    private val supplier: Supplier<Long> = Supplier {
         try {
             Thread.sleep(DATA_GENERATION_PERIOD_MS.toLong())
         } catch (e: InterruptedException) {
