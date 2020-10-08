@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat
 
 import com.gshubina.lullzzz.testappkotlin.R
 import com.gshubina.lullzzz.testappkotlin.service.simulator.SpeedSimulator
+import com.gshubina.lullzzz.testappkotlin.service.simulator.TachometerSimulator
 import java.util.function.Consumer
 import java.util.function.Predicate
 
@@ -190,7 +191,10 @@ class GenerateDataService : Service() {
 
         override fun requestTachometerData() {
             val handler = Handler(mTachometerThread.looper)
-            handler.post { TODO("d") }
+            handler.post {
+                TachometerSimulator(Predicate { data -> mIsSimulationStarted }).tachometerStream()
+                    .forEach(Consumer { data -> sendTachometerData(data) })
+            }
         }
     }
 
