@@ -10,9 +10,7 @@ class ViewPagerFragmentStateAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
     private val FRAGMENTS_NUM: Int = 2
 
-    override fun getItemCount(): Int {
-        return FRAGMENTS_NUM
-    }
+    override fun getItemCount(): Int = FRAGMENTS_NUM
 
     override fun createFragment(position: Int): Fragment {
         return if (ViewType.TACHOMETER == ViewType.values()[position]){

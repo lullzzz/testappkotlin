@@ -17,7 +17,7 @@ class TachometerSimulator(filterFunction : Predicate<Double>) {
         try {
             Thread.sleep(DATA_GENERATION_PERIOD_MS.toLong())
         } catch (e: InterruptedException) {
-            Log.w(LOG_TAG, e.message)
+            Log.w(LOG_TAG, e.message.toString())
         }
         java.time.Instant.now().toEpochMilli()
     }
@@ -26,9 +26,7 @@ class TachometerSimulator(filterFunction : Predicate<Double>) {
         return Stream.generate(supplier)
     }
 
-    private fun tachometerFunction(t: Long): Double {
-        return abs(10000 * sin(0.0001 * t))
-    }
+    private fun tachometerFunction(t: Long): Double = abs(10000 * sin(0.0001 * t))
 
 
     fun tachometerStream(): Stream<Double> = buildStream()

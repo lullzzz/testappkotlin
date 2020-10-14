@@ -8,9 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gshubina.lullzzz.testappkotlin.R
 import com.gshubina.lullzzz.testappkotlin.client.view.GaugeView
-import com.gshubina.lullzzz.testappkotlin.client.viewmodel.SpeedometerDataViewModel
 import com.gshubina.lullzzz.testappkotlin.client.viewmodel.TachometerDataViewModel
-import kotlinx.android.synthetic.main.fragment_speedometer.*
 import kotlinx.android.synthetic.main.fragment_tachometer.*
 
 class TachometerFragment : FullscreenFragment() {
@@ -20,14 +18,12 @@ class TachometerFragment : FullscreenFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_tachometer, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_tachometer, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mTachometerDataViewModel = ViewModelProvider(requireActivity()).get(TachometerDataViewModel::class.java)
         mTachometerDataViewModel.getTachometerData()
-            .observe(viewLifecycleOwner, Observer<Double>{ value -> (tachometer_view as GaugeView).setCurrentValue(value)})
+            .observe(viewLifecycleOwner, Observer<Double>{ (tachometer_view as GaugeView).setCurrentValue(it)})
     }
 }

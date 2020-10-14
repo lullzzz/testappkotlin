@@ -11,7 +11,5 @@ class SpeedometerDataViewModel : ViewModel() {
         mSpeedometerData.value = item
     }
 
-    fun getSpeedometerData() : LiveData<Double> {
-        return mSpeedometerData
-    }
+    fun getSpeedometerData() : LiveData<Double> = mSpeedometerData
 }

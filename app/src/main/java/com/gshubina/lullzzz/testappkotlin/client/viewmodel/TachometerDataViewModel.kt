@@ -11,7 +11,5 @@ class TachometerDataViewModel : ViewModel() {
         mTachometerData.value = item
     }
 
-    fun getTachometerData() : LiveData<Double> {
-        return mTachometerData
-    }
+    fun getTachometerData() : LiveData<Double> = mTachometerData
 }

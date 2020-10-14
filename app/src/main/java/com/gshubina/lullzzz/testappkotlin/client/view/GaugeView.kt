@@ -258,8 +258,8 @@ class GaugeView : View {
                 if (y > 10) {
                     mScaleFactor = calculateScaleFactor(mMaxValue.toDouble())
                     mScaleFactorText = mScaleFactor.toString()
-                    mMaxValue /=  mScaleFactor.toFloat()
-                    mTextTickStep /=  mScaleFactor.toFloat()
+                    mMaxValue /=  mScaleFactor
+                    mTextTickStep /=  mScaleFactor
                 }
             } else {
                 mScaleFactor = calculateNegativeScaleFactor(mMaxValue.toDouble(), mScaleFactor)
@@ -405,9 +405,7 @@ class GaugeView : View {
         }
     }
 
-    fun getCurrentValue(): Double {
-        return mCurrentValue
-    }
+    fun getCurrentValue() = mCurrentValue
 
     fun setCurrentValue(value: Double) {
         var calc_value = value

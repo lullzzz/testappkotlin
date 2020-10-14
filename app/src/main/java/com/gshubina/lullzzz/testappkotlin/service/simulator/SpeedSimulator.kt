@@ -17,7 +17,7 @@ class SpeedSimulator(filterFunction: Predicate<Double>) {
         try {
             Thread.sleep(DATA_GENERATION_PERIOD_MS.toLong())
         } catch (e: InterruptedException) {
-            Log.w(LOG_TAG, e.message)
+            Log.w(LOG_TAG, e.message.toString())
         }
         java.time.Instant.now().toEpochMilli()
     }
@@ -26,9 +26,7 @@ class SpeedSimulator(filterFunction: Predicate<Double>) {
         return Stream.generate(supplier)
     }
 
-    private fun speedFunction(t: Long): Double {
-        return abs(200 * sin(0.0001 * t))
-    }
+    private fun speedFunction(t: Long): Double = abs(200 * sin(0.0001 * t))
 
 
     fun speedStream(): Stream<Double> = buildStream()

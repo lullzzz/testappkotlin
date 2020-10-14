@@ -18,14 +18,12 @@ class SpeedometerFragment : FullscreenFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_speedometer, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_speedometer, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mSpeedometerDataViewModel = ViewModelProvider(requireActivity()).get(SpeedometerDataViewModel::class.java)
         mSpeedometerDataViewModel.getSpeedometerData()
-            .observe(viewLifecycleOwner, Observer<Double>{ value -> (speedometer_view as GaugeView).setCurrentValue(value)})
+            .observe(viewLifecycleOwner, Observer<Double>{ (speedometer_view as GaugeView).setCurrentValue(it)})
     }
 }
